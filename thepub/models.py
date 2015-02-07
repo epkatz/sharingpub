@@ -12,8 +12,8 @@ class Shareable(models.Model):
     url = models.ForeignKey(Url)
     created_datetime = models.DateTimeField(auto_now_add=True)
     deleted_datetime = models.DateTimeField()
-    labels = models.ManyToManyField(Label, through='ShareableLabel')
-    shared_by = models.ForeignKey(UserProfile)
+    labels = models.ManyToManyField('Label', through='ShareableLabel')
+    shared_by = models.ForeignKey('UserProfile')
 
 
 class Label(models.Model):
