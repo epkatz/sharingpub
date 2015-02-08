@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Shareable(models.Model):
-    url = models.URLField(max_length=2000, unique=True)
+    url = models.URLField(max_length=2000)
     created_datetime = models.DateTimeField(auto_now_add=True)
     deleted_datetime = models.DateTimeField(null=True, blank=True)
     labels = models.ManyToManyField('Label', through='ShareableLabel')
