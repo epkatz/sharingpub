@@ -1,3 +1,6 @@
 from django.contrib import admin
+from thepub.models import Shareable, UserProfile
 
-# Register your models here.
+
+admin.site.register(Shareable)
+admin.site.register(UserProfile)

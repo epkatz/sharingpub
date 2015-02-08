@@ -4,16 +4,15 @@ from django.db import models
 """Shareable"""
 
 
-class Url(models.Model):
-    url = models.URLField(max_length=2000, unique=True)
-
-
 class Shareable(models.Model):
-    url = models.ForeignKey(Url)
+    url = models.URLField(max_length=2000, unique=True)
     created_datetime = models.DateTimeField(auto_now_add=True)
-    deleted_datetime = models.DateTimeField()
+    deleted_datetime = models.DateTimeField(null=True, blank=True)
     labels = models.ManyToManyField('Label', through='ShareableLabel')
     shared_by = models.ForeignKey('UserProfile')
+
+    def __str__(self):
+        return "%s shared by %s" % (self.url, self.shared_by.__str__())
 
 
 class Label(models.Model):
@@ -24,7 +23,7 @@ class ShareableLabel(models.Model):
     label = models.ForeignKey(Label)
     shareable = models.ForeignKey(Shareable)
     created_datetime = models.DateTimeField(auto_now_add=True)
-    deleted_datetime = models.DateTimeField()
+    deleted_datetime = models.DateTimeField(null=True, blank=True)
 
 
 """User"""
@@ -32,9 +31,11 @@ class ShareableLabel(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    invited_by = models.ForeignKey("self")
     is_test_user = models.BooleanField(default=False)
+    is_beta_user = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.user.__str__()
 
 
 
